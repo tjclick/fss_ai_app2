@@ -1,42 +1,65 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
-class HomeItemChart extends StatelessWidget {
-  final List<charts.Series<OrdinalSales, int>> seriesList = [
-    charts.Series<OrdinalSales, int>(
-      id: 'Sales',
-      domainFn: (OrdinalSales sales, _) => sales.year,
-      measureFn: (OrdinalSales sales, _) => sales.sales,
-      data: [
-        OrdinalSales(0, 5),
-        OrdinalSales(5, 25),
-        OrdinalSales(7, 100),
-        OrdinalSales(10, 75),
-        OrdinalSales(13, 175),
-        OrdinalSales(15, 45),
-        OrdinalSales(17, 105),
-        OrdinalSales(20, 145),
-      ],
-      colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-      //fillColorFn: (_, __) => charts.MaterialPalette.red.shadeDefault.lighter,
-    ),
-  ];
+import '../../models/home_model.dart';
+import '../../providers/home_provider.dart';
+
+class HomeItemChart extends StatefulWidget  {
+  @override
+  _HomeItemChartState createState() => _HomeItemChartState();
+}
+
+class _HomeItemChartState extends State<HomeItemChart> {
+  HomeProviders homeProvider = HomeProviders();
+  List<PredictedTickerData> pTickerData = [];
+  List<PredictedTickerData> _data = [];
+
+  Future<void> loadJsonData() async {
+    pTickerData = await homeProvider.getPredictedTickerData();
+
+    setState(() {
+      _data = pTickerData;
+    });
+  }
 
   @override
+  void initState() {
+    super.initState();
+    loadJsonData();
+  }
+
+@override
   Widget build(BuildContext context) {
+    List<charts.Series<PredictedTickerData, int>> series = [
+      // Line #1
+      new charts.Series(
+        id: "ticker",
+        data: _data,
+        domainFn: (PredictedTickerData series, _) => series.xaxis,
+        measureFn: (PredictedTickerData series, _) => series.yprice,
+        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+      ), 
+    ];
+
     return Container(
       height: 200,
-      child: charts.LineChart(
-        seriesList,
-        //animate: true,
+      //padding: EdgeInsets.all(10),
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                child: charts.LineChart(
+                  series, 
+                  animate: false
+                  ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
-}
 
-class OrdinalSales {
-  final int year;
-  final int sales;
-
-  OrdinalSales(this.year, this.sales);
 }
