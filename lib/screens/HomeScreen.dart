@@ -99,11 +99,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-                            height: 280,
+                            //padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                            height: 250,
                             width: MediaQuery.of(context).size.width * 0.92,
                             decoration: BoxDecoration(
-                              color: Color(0xFF1e1e1e),
+                              color: Color.fromARGB(255, 0, 0, 0),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: Column(
@@ -112,9 +112,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(
-                                  height: 200,
-                                  width: MediaQuery.of(context).size.width * 0.91,
-                                  child: HomeItemChart(),
+                                  height: 170,
+                                  width: MediaQuery.of(context).size.width * 0.99,
+                                  // chart(home_chart) widget 호출 ticker변수 전달
+                                  child: HomeItemChart(ticker: pTickerList[index].ticker),
                                 ),
                                 SizedBox(height: 10),
                                 Text(

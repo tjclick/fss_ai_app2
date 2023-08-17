@@ -22,10 +22,10 @@ class HomeProviders{
   }
 
   // 추천 확인된 종목의 예측 데이타
-  Future<List<PredictedTickerData>> getPredictedTickerData() async {
+  Future<List<PredictedTickerData>> getPredictedTickerData(String ticker) async {
     List<PredictedTickerData> pTickerData = [];
     final response = await http.get(
-      Uri.parse('$baseUrl/HomePredictedTickerList?code=A002&ticker=352480'),
+      Uri.parse('$baseUrl/HomePredictedTickerList?code=A002&ticker=$ticker'),
     );
     if (response.statusCode == 200) {
       pTickerData = jsonDecode(response.body).map<PredictedTickerData>( (tickerdatamap) {
