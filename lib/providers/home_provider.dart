@@ -5,7 +5,10 @@ import 'package:http/http.dart' as http;
 import '../models/home_model.dart';
 
 class HomeProviders{
-  static const baseUrl = 'http://10.21.1.61:8000/api/home';
+  // static const baseUrl = 'https://www.fssai.kr/api/home';
+  // static const baseUrl = 'http://10.21.1.61:8000/api/home';
+  // static const baseUrl = 'http://192.168.200.179:8000/api/home';
+  static const baseUrl = 'http://192.168.200.154:8000/api/home';
   
   // 추천된 종목 리스트
   Future<List<PredictedTickerList>> getPredictedTickerList() async {

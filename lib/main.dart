@@ -1,9 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'screens/HomeScreen.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
+
+import 'screens/AnalysisScreen.dart';
+import 'screens/HomeScreen.dart';
 
 void main() {
   HttpOverrides.global = NoCheckCertificateHttpOverrides();
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         // # DEMO
         GetPage(name: "/", page: () => HomeScreen()),
         GetPage(name: "/home", page: () => HomeScreen()),
+        GetPage(name: "/analysis", page: () => AnalysisScreen()),
 
         // # API Test
         //GetPage(name: "/", page: () => HomeScreen()),

@@ -2,18 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../models/home_model.dart';
-import '../modules/home/home_chart.dart';
-import '../modules/home/recomm_sub_data.dart';
+import '../modules/analysis/analysis_crawl.dart';
 import '../providers/home_provider.dart';
 
-
-class HomeScreen extends StatefulWidget {
+class AnalysisScreen extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _AnalysisScreenState createState() => _AnalysisScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 0;
+class _AnalysisScreenState extends State<AnalysisScreen> {
+  int _selectedIndex = 1;
   List<PredictedTickerList> pTickerList = [];
   bool isLoading = true;
   HomeProviders homeProvider = HomeProviders();
@@ -67,8 +65,11 @@ class _HomeScreenState extends State<HomeScreen> {
       body: CustomScrollView(
         slivers: <Widget>[
           // SliverList에 여러개의 item을 구성하고  title과 image를 구성
-          // [더보기 + ] 누르면 해당 종목만 -> analysis(해당 종목만 보여주기)로 이동
-          // bottomNavigationBar 이동시는 -> analysis(추천종목 전체 보여주기)
+          // AI가 패턴 분석하여 평가 기준데이터 조합(POINT)
+          // 일일 시세 차트(3 charts) ,  상단서브탭((company | volume | news) 3 tabs)
+          // 일일 시세 리스트(종목명, 시세, 등락률, 거래량, 거래대금)
+          // 기업개요 (app 자체 크랩핑)
+          // https://api.finance.naver.com/siseJson.naver?symbol=005930&requestType=1&startTime=20210101&endTime=20211001&timeframe=day
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
@@ -104,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           Container(
                             padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                            height: 260,
+                            height: 360,
                             width: MediaQuery.of(context).size.width * 0.92,
                             decoration: BoxDecoration(
                               color: Color.fromARGB(255, 0, 0, 0),
@@ -118,20 +119,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                 SizedBox(
                                   height: 180,
                                   width: MediaQuery.of(context).size.width * 0.99,
+
                                   // chart(home_chart) widget 호출 ticker변수 전달
-                                  child: HomeItemChart(ticker: pTickerList[index].ticker),
+                                  // child: AnalysisItemChart(ticker: pTickerList[index].ticker),
+
                                 ),
                                 //SizedBox(height: 5),
-                                // 3*3 grid안에  각각의 grid에 text를 넣기 위해 column 사용하고 radius 10을 주고 색상을 넣어줌 
+
                                 Container(
                                   padding: EdgeInsets.fromLTRB(25, 0, 0, 0),
-                                  height: 70,
+                                  height: 180,
                                   width: MediaQuery.of(context).size.width * 0.99,
                                   decoration: BoxDecoration(
                                     color: Color.fromARGB(255, 0, 0, 0),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
-                                  child: HomeSubLabelData(ticker: pTickerList[index].ticker),
+                                  child: AnalysisCrawlJson(ticker: pTickerList[index].ticker),
                                 ),
                               ],
                             ),
