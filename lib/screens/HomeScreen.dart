@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 
 import '../models/home_model.dart';
 import '../modules/charts/home_chart.dart';
+import '../modules/home/recomm_sub_data.dart';
 import '../providers/home_provider.dart';
+
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -70,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
               (BuildContext context, int index) {
                 // Here, you can return a widget for each item based on the index.
                 return Container(
-                  padding: EdgeInsets.fromLTRB(15, 15, 15, 0),
+                  padding: EdgeInsets.fromLTRB(15, 20, 0, 0),
                   child: Column(
                     children: [
                       Row(
@@ -99,8 +101,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            //padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-                            height: 250,
+                            padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                            height: 260,
                             width: MediaQuery.of(context).size.width * 0.92,
                             decoration: BoxDecoration(
                               color: Color.fromARGB(255, 0, 0, 0),
@@ -112,26 +114,22 @@ class _HomeScreenState extends State<HomeScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(
-                                  height: 170,
+                                  height: 180,
                                   width: MediaQuery.of(context).size.width * 0.99,
                                   // chart(home_chart) widget 호출 ticker변수 전달
                                   child: HomeItemChart(ticker: pTickerList[index].ticker),
                                 ),
-                                SizedBox(height: 10),
-                                Text(
-                                  'H 13,500 (+12.4%)',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Color.fromARGB(255, 255, 70, 70),
+                                //SizedBox(height: 5),
+                                // 3*3 grid안에  각각의 grid에 text를 넣기 위해 column 사용하고 radius 10을 주고 색상을 넣어줌 
+                                Container(
+                                  padding: EdgeInsets.fromLTRB(25, 0, 0, 0),
+                                  height: 70,
+                                  width: MediaQuery.of(context).size.width * 0.99,
+                                  decoration: BoxDecoration(
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
-                                ),
-                                SizedBox(height: 10),
-                                Text(
-                                  'L 12,100 (-1.8%)',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Color.fromARGB(255, 42, 174, 250),
-                                  ),
+                                  child: HomeSubLabelData(ticker: pTickerList[index].ticker),
                                 ),
                               ],
                             ),
