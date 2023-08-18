@@ -22,7 +22,6 @@ class _HomeItemChartState extends State<HomeItemChart> {
 
   Future<void> loadJsonData() async {
     // provider에게 변수값으로 호출 연동
-    // provider에게 변수값으로 호출 연동
     pTickerData = await homeProvider.getPredictedTickerData(ticker);
 
     setState(() {

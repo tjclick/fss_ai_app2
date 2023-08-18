@@ -18,7 +18,6 @@ class _HomeSubLabelDataState extends State<HomeSubLabelData> {
   List<TickerSubLabelData> pTSubLabelData = [];
   List<TickerSubLabelData> _data = [];
 
-
   Future<void> loadJsonData() async {
     // provider에게 변수값으로 호출 연동
     pTSubLabelData = await homeProvider.getTickerSubLabelData(ticker);
@@ -59,7 +58,7 @@ class _HomeSubLabelDataState extends State<HomeSubLabelData> {
         day2_low = item.day2_low;
         day2_sale_price = item.day2_sale_price;
     }
-
+ 
     return Column(
             children: [
               Row(
