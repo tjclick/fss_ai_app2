@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import '../../models/home_model.dart';
 import '../../providers/home_provider.dart';
 
-class HomeItemChart extends StatefulWidget {
-  final String ticker; // 상위 위젯 호출시 변수값 전달 받기 위함
-  HomeItemChart({required this.ticker}); // 상위 위젯 호출시 변수값 전달 받기 위함
+class HomeItemChart extends StatefulWidget  {
+  final String ticker;                    // 상위 위젯 호출시 변수값 전달 받기 위함
+  HomeItemChart({required this.ticker});  // 상위 위젯 호출시 변수값 전달 받기 위함
 
   @override
   _HomeItemChartState createState() => _HomeItemChartState();
@@ -21,6 +21,7 @@ class _HomeItemChartState extends State<HomeItemChart> {
   List<PredictedTickerData> _data = [];
 
   Future<void> loadJsonData() async {
+    // provider에게 변수값으로 호출 연동
     // provider에게 변수값으로 호출 연동
     pTickerData = await homeProvider.getPredictedTickerData(ticker);
 
