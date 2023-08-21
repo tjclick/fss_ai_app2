@@ -2,61 +2,20 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import '../../models/analysis_model.dart';
+import '../../providers/analysis_provider.dart';
 
-class AnalysisCrawlJson extends StatefulWidget  {
+class AnalysisPointList extends StatefulWidget  {
   final String ticker;                        // 상위 위젯 호출시 변수값 전달 받기 위함
-  AnalysisCrawlJson({required this.ticker});  // 상위 위젯 호출시 변수값 전달 받기 위함
+  AnalysisPointList({required this.ticker});  // 상위 위젯 호출시 변수값 전달 받기 위함
 
   @override
-  _AnalysisCrawlJsonState createState() => _AnalysisCrawlJsonState();
+  _AnalysisPointListState createState() => _AnalysisPointListState();
 }
 
-class _AnalysisCrawlJsonState extends State<AnalysisCrawlJson> {
+class _AnalysisPointListState extends State<AnalysisPointList> {
   late String ticker; // 상위 위젯으로부터 호출시 변수값 전달 받기 위함
-  static const baseUrl = 'https://api.finance.naver.com/siseJson.naver';
 
-  // 오늘 날짜와 2주 전 날짜를 구하기 위한 변수
-  DateTime now = DateTime.now();
-  DateTime twoWeeksAgo = DateTime.now().subtract(Duration(days: 16));
-  String today = DateTime.now().toString().substring(0, 10).replaceAll('-', '');
-  String twoWeeksAgoDay = DateTime.now().subtract(Duration(days: 16)).toString().substring(0, 10).replaceAll('-', '');
-
-  // URL 크로링 데이터 가져오기
-  Future<List<dynamic>> fetchData() async {
-      final response = await http.get(
-          Uri.parse('$baseUrl?symbol=$ticker&requestType=1&startTime=$twoWeeksAgoDay&endTime=$today&timeframe=day'),
-          headers: {
-            'Content-Type': 'application/json; charset=utf-8',
-          },
-      );
-
-      if (response.statusCode == 200) {
-          List<dynamic> jsonData = [];
-          // 크로링 데이터 전처리 후 JSON 변환
-          try {
-              String responseBody = response.body;
-              responseBody = responseBody.replaceAll(' ', '');
-              responseBody = responseBody.replaceAll("['날짜','시가','고가','저가','종가','거래량','외국인소진율'],", "");
-            
-              jsonData = json.decode(responseBody);
-              // for (List<dynamic> row in jsonData) {
-              //      print(row);
-              // }
-          } catch (e) {
-              print('Response Body: ${response.body}');
-              print('JSON Parsing Error: $e');
-          }
-          return jsonData;
-      } else {
-          throw Exception('Failed to load data');
-      }
-  }
-
-  // 크로링 데이터 전처리 1행 컬럼 ROW 분리(1row = [,])
-  List<dynamic> _parseJsonRow(String rowString) {
-    return List<dynamic>.from(rowString.split(", "));
-  }
 
   @override
   void initState() {
@@ -66,10 +25,6 @@ class _AnalysisCrawlJsonState extends State<AnalysisCrawlJson> {
 
   @override
   Widget build(BuildContext context) {
-    String _calcRate(String price1, String price2) {
-        //두개의 string을 int로 변환하여 차이 증감% 계산 후 다시 string으로 변환
-        return (((int.parse(price1) - int.parse(price2)) / int.parse(price2)) * 100).toStringAsFixed(1).toString();
-    }
 
     // final blue = charts.MaterialPalette.blue.shadeDefault;
     return Container(

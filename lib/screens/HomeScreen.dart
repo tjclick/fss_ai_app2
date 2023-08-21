@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 import '../models/home_model.dart';
@@ -17,6 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<PredictedTickerList> pTickerList = [];
   bool isLoading = true;
   HomeProviders homeProvider = HomeProviders();
+  bool isToastDisplayed = false;
 
   void _onItemTapped(int index) {
     if (index == 0) Get.toNamed("/home");
@@ -36,8 +38,33 @@ class _HomeScreenState extends State<HomeScreen> {
     initPredictedTickerList().then((_) {
       setState(() {
         isLoading = false;
+        isToastDisplayed = true;
       });
     });
+
+    // fluttertoast 메세지 두번 띄우기
+    if (!isToastDisplayed) {
+      Fluttertoast.showToast(
+            msg: "AI는 투자경고 종목은 추천하지 않습니다",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.TOP,
+            backgroundColor: Color.fromARGB(255, 250, 78, 78), // Customize the background color
+            fontSize: 17.0, // Customize the font size
+      );
+      if (pTickerList.isEmpty) {
+        Future.delayed(Duration.zero, () {
+          Fluttertoast.showToast(
+            msg: "경기 불안으로 추천종목이 없습니다",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.CENTER,
+            backgroundColor: Color.fromARGB(255, 250, 78, 78), // Customize the background color
+            fontSize: 17.0, // Customize the font size
+          );
+          
+        });
+      }
+    }
+
   }
 
 

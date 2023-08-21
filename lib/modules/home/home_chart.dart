@@ -88,7 +88,8 @@ class _HomeItemChartState extends State<HomeItemChart> {
                 primaryMeasureAxis: new charts.NumericAxisSpec(
                   renderSpec: charts.GridlineRendererSpec(
                     lineStyle: charts.LineStyleSpec(
-                      dashPattern: [3, 3],
+                      //dashPattern: [3, 3],
+                      color: charts.MaterialPalette.gray.shadeDefault,
                     ),
                     //labelStyle: charts.TextStyleSpec(fontSize: 14, color: charts.MaterialPalette.white),
                   ),

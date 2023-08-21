@@ -14,7 +14,6 @@ class AnalysisItemChart extends StatefulWidget  {
 
 class _AnalysisItemChartState extends State<AnalysisItemChart> {
   late String ticker; // 상위 위젯으로부터 호출시 변수값 전달 받기 위함
-  int _idxDivid = 350;
 
   AnalysisProviders analysisProviders = AnalysisProviders();
   List<TickerDailySiseData> pTDSiseData = [];
@@ -40,26 +39,27 @@ class _AnalysisItemChartState extends State<AnalysisItemChart> {
 
   @override
   Widget build(BuildContext context) {
-    // final blue = charts.MaterialPalette.blue.shadeDefault;
-    // final red = charts.MaterialPalette.red.shadeDefault;
-    // final yellow = charts.MaterialPalette.yellow.shadeDefault;
+    final blue = charts.MaterialPalette.blue.shadeDefault;
+    final red = charts.MaterialPalette.red.shadeDefault;
 
-    List<charts.Series<TickerDailySiseData, int>> series = [
-      // Line #1
-      // new charts.Series(
-      //   id: "ticker",
-      //   data: _data,
-      //   domainFn: (TickerDailySiseData series, _) => series.tds_datetime,    // X축
-      //   measureFn: (TickerDailySiseData series, _) => series.tds_high,       // Y축
-      //   strokeWidthPxFn: (_, __) => 1,                                // 라인 굵기 (PredictedTickerData series, _) => series.yprice
-      //                                                                 // 데이터 값에 상관없이 메세드 전체 적용시 ***
-      //   colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-      // ),
+    List<charts.Series<TickerDailySiseData, String>> series = [
+      //Line #1 
+      new charts.Series(
+        id: "ticker",
+        data: _data,
+        domainFn: (TickerDailySiseData series, _) => series.tds_datetime,    // X축
+        measureFn: (TickerDailySiseData series, _) => series.tds_rate,       // Y축
+        strokeWidthPxFn: (_, __) => 1,                                // 라인 굵기 (PredictedTickerData series, _) => series.yprice
+                                                                      // 데이터 값에 상관없이 메세드 전체 적용시 ***
+        //colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        colorFn: (TickerDailySiseData series, _) => series.tds_rate <= 0 ? blue : red,
+        labelAccessorFn: (TickerDailySiseData series, _) => '${series.tds_rate.toString()}',   // 막대그래프 값 표시
+      ),
     ];
 
     return Container(
-      height: 180,
-      padding: EdgeInsets.only(top: 10.0),
+      height: 160,
+      //padding: EdgeInsets.only(top: 10.0),
       child: Card(
         color: Color.fromARGB(255, 0, 0, 0),
         // child: Padding(
@@ -67,36 +67,29 @@ class _AnalysisItemChartState extends State<AnalysisItemChart> {
         child: Column(
           children: <Widget>[
             Expanded(
-              child: charts.LineChart(
+              child: charts.BarChart(
                 series,
                 animate: false,
                 // X축 가이드라인, MAX/MIN 값 지정
-                // domainAxis: new charts.OrdinalAxisSpec(
-                //     // Make sure that we draw the domain axis line.
-                //     showAxisLine: true,
-                //     // But don't draw anything else.
-                //     renderSpec: new charts.NoneRenderSpec(),
+                barRendererDecorator: new charts.BarLabelDecorator(
+                      insideLabelStyleSpec: new charts.TextStyleSpec(
+                          color: charts.MaterialPalette.white, fontSize: 10),
+                      outsideLabelStyleSpec: new charts.TextStyleSpec(
+                          color: charts.MaterialPalette.white, fontSize: 10),
+                ),
+                domainAxis: new charts.OrdinalAxisSpec(),
 
-                // ),
-                // Y축 가이드라인, MAX/MIN 값 지정
+                //Y축 가이드라인, MAX/MIN 값 지정
                 primaryMeasureAxis: new charts.NumericAxisSpec(
                   renderSpec: charts.GridlineRendererSpec(
                     lineStyle: charts.LineStyleSpec(
-                      dashPattern: [3, 3],
+                      dashPattern: [1, 1], 
+                      color: charts.MaterialPalette.gray.shade800,
                     ),
-                    //labelStyle: charts.TextStyleSpec(fontSize: 14, color: charts.MaterialPalette.white),
                   ),
-                  tickProviderSpec:
-                      new charts.BasicNumericTickProviderSpec(zeroBound: false),
+                  tickProviderSpec: new charts.BasicNumericTickProviderSpec(desiredTickCount: 5),
                 ),
 
-                behaviors: [
-                  //라인 선택 하이라이트
-                  new charts.LinePointHighlighter(
-                      showHorizontalFollowLine:charts.LinePointHighlighterFollowLineType.none,
-                      showVerticalFollowLine:charts.LinePointHighlighterFollowLineType.nearest),
-                  new charts.SelectNearest(eventTrigger: charts.SelectionTrigger.tapAndDrag),
-                ],
               ),
             )
           ],
