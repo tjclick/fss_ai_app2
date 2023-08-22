@@ -25,14 +25,14 @@ class AnalysisProviders{
   }
 
   // analysis_point_list 에서 사용
-  Future<List<PointListData>> getTickerPointListData(String ticker) async {
-    List<PointListData> pTDPointList = [];
+  Future<List<TickerPointListData>> getTickerPointListData(String ticker) async {
+    List<TickerPointListData> pTDPointList = [];
     final response = await http.get(
       Uri.parse('$baseUrl/TickerPointListData?ticker=$ticker'),
     );
     if (response.statusCode == 200) {
-      pTDPointList = jsonDecode(response.body).map<PointListData>( (analysisdatamap) {
-        return PointListData.fromMap(analysisdatamap);
+      pTDPointList = jsonDecode(response.body).map<TickerPointListData>( (analysisdatamap) {
+        return TickerPointListData.fromMap(analysisdatamap);
       }).toList();
     }
     return pTDPointList;

@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 
 import '../models/home_model.dart';
 import '../modules/analysis/analysis_chart.dart';
-import '../modules/analysis/analysis_crawl.dart';
+//import '../modules/analysis/analysis_crawl.dart';
+import '../modules/analysis/analysis_point.dart';
 import '../providers/home_provider.dart';
 
 class AnalysisScreen extends StatefulWidget {
@@ -71,6 +72,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
+              //mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: pTickerList.map((pTickerList) {
                 return Padding(
                   padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
@@ -118,7 +120,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
-                                          Text('AI indexing',
+                                          Text('AI분석Point',
                                             style: TextStyle(
                                               fontSize: 16,
                                               color: Color(0xFFEDEDED),
@@ -151,7 +153,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                 children: [
                                   Container(
                                     padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                                    height: 200,
+                                    height: 150,
                                     width: MediaQuery.of(context).size.width * 0.92,
                                     decoration: BoxDecoration(
                                       color: Color.fromARGB(255, 0, 0, 0),
@@ -164,10 +166,11 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                       children: [
                                         // 인덱싱 포인트 레이어 구성 (기업회사 | 뉴스)
                                         SizedBox(
-                                          height: 200,
+                                          height: 150,
                                           width: MediaQuery.of(context).size.width * 0.99,
                                           //chart(home_chart) widget 호출 ticker변수 전달
-                                          child: AnalysisCrawlJson(ticker: selectedMenu),
+                                          //child: AnalysisCrawlJson(ticker: selectedMenu),
+                                          child: AnalysisPointList(ticker: selectedMenu),
                                         ),
                                       ],
                                     ),

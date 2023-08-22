@@ -1,4 +1,6 @@
 // 추천 종목 일자별 시세 정보
+
+
 class TickerDailySiseData{
   late String tds_datetime;
   // late int tds_open;
@@ -34,7 +36,7 @@ class TickerDailySiseData{
 }
 
 // 분석 SUB Layer 01 포인트 정보
-class PointListData{
+class TickerPointListData{
   late String play_date;
   late double company;
   late double volume;
@@ -44,8 +46,8 @@ class PointListData{
   late double day1_low;
   late double day2_high;
 
-  PointListData({
-    required this.play_date,
+  TickerPointListData({
+  required this.play_date,
   required this.company,
   required this.volume,
   required this.economic,
@@ -55,14 +57,14 @@ class PointListData{
   required this.day2_high,
   });
 
-  PointListData.fromMap(Map<String, dynamic>? map) {
-    play_date = map?['datetime'] ?? '';
-    company = map?['open'] ?? '';
-    volume = map?['high'] ?? '';
-    economic = map?['low'] ?? '';
-    news = map?['close'] ?? '';
-    day_rate = map?['amount'] ?? '';
-    day1_low = map?['amount'] ?? '';
-    day2_high = map?['rate'] ?? '';
+  TickerPointListData.fromMap(Map<String, dynamic>? map) {
+    play_date = map?['play_date'] ?? '';
+    company = map?['company'] ?? '';
+    volume = map?['volume'] ?? '';
+    economic = map?['economic'] ?? '';
+    news = map?['news'] ?? '';
+    day_rate = map?['day_rate'] ?? 0.0;   // double NULL 처리
+    day1_low = map?['day1_low'] ?? 0.0;
+    day2_high = map?['day2_high'] ?? 0.0;
   }
 }
