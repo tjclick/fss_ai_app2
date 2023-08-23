@@ -38,5 +38,17 @@ class AnalysisProviders{
     return pTDPointList;
   }
 
-
+  // API > 분석 > 일별 거래량 데이타
+  Future<List<TickerDailyAmountList>> getTickerDailyAmountList(String ticker) async {
+    List<TickerDailyAmountList> pTDAmountData = [];
+    final response = await http.get(
+      Uri.parse('$baseUrl/TickerDailyAmountList?ticker=$ticker'),
+    );
+    if (response.statusCode == 200) {
+      pTDAmountData = jsonDecode(response.body).map<TickerDailyAmountList>( (analysisdatamap) {
+        return TickerDailyAmountList.fromMap(analysisdatamap);
+      }).toList();
+    }
+    return pTDAmountData;
+  }
 }

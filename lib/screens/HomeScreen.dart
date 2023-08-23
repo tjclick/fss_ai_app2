@@ -3,7 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 import '../models/home_model.dart';
-import '../modules/home/home_chart.dart';
+import '../modules/home/predict_d123_chart.dart';
 import '../modules/home/recomm_sub_data.dart';
 import '../providers/home_provider.dart';
 

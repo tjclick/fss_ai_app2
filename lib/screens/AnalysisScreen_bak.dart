@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../models/home_model.dart';
-import '../modules/analysis/analysis_chart.dart';
-import '../modules/analysis/analysis_crawl.dart';
+import '../modules/analysis/chart_daily_rating.dart';
+import '../modules/analysis/point_uri_crawl_sise_.dart';
 // import '../modules/analysis/news_crawl.dart';
 import '../providers/home_provider.dart';
 

@@ -70,11 +70,6 @@ class _AnalysisNewsCrawlState extends State<AnalysisNewsCrawl> {
       }
   }
 
-  // 크로링 데이터 전처리 1행 컬럼 ROW 분리(1row = [,])
-  // List<dynamic> _parseJsonRow(String rowString) {
-  //   return List<dynamic>.from(rowString.split(", "));
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -115,44 +110,11 @@ class _AnalysisNewsCrawlState extends State<AnalysisNewsCrawl> {
                                 itemCount: jsonData?.length,
                                 itemBuilder: (BuildContext context, int index) {
 
-                                  // 1행 데이터 분리(,)
-                                  //List<dynamic> rowData = _parseJsonRow(jsonData![index].toString());
                                   return Column(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   //   children: <Widget>[
                                   //     Row(
-                                  //       children: <Widget>[
-                                  //         Text(rowData[0].toString().substring(5, 7)+'/'+rowData[0].toString().substring(7, 9), 
-                                  //                 style: const TextStyle(fontSize: 13.0, color: Color(0xFFededed))),
-                                  //         SizedBox(width: 12.0, height: 20,),
-                                  //         Text(rowData[1].toString(), 
-                                  //                 style: const TextStyle(fontSize: 13.0, color: Color(0xFF797979))),
-                                  //         SizedBox(width: 12.0,),
-                                  //         Text(rowData[2].toString(), 
-                                  //                 style: const TextStyle(fontSize: 13.0, color: Color(0xFFededed))),
-                                  //         SizedBox(width: 12.0,),
-                                  //         Text(rowData[3].toString(), 
-                                  //                 style: const TextStyle(fontSize: 13.0, color: Color(0xFFededed))),
-                                  //         SizedBox(width: 12.0,),
-                                  //         Text(rowData[4].toString(), 
-                                  //                 style: const TextStyle(fontSize: 13.0, color: Color(0xFFededed))),
-                                  //         SizedBox(width: 12.0,),
-                                  //         // container에 넣고 radius(3)로 둥글게 처리하고 color(빨강, 파랑)로 색상 처리
-                                  //         Container(
-                                  //           //text align left로 설정
-                                  //           alignment: Alignment.centerRight,
-                                  //           width: 55.0,
-                                  //           height: 18.0,
-                                  //           padding: EdgeInsets.fromLTRB(2, 0, 5, 0),
-                                  //           decoration: BoxDecoration(
-                                  //             borderRadius: BorderRadius.circular(3),
-                                  //             color: _calcRate(rowData[4].toString(), rowData[1].toString()).contains('-') ?
-                                  //             Color.fromARGB(255, 46, 117, 250) : Color.fromARGB(255, 251, 61, 61),
-                                  //           ),
-                                  //           child: Text(_calcRate(rowData[4].toString(), rowData[1].toString()) + '%', 
-                                  //                   style: TextStyle(fontSize: 14.0, color: Color(0xFFededed))),
-                                  //         ),
-                                  //       ],
+                                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   //     ),
                                   //   ],
                                   );

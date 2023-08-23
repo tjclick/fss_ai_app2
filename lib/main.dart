@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import 'screens/AnalysisScreen.dart';
 import 'screens/HomeScreen.dart';
+import 'screens/NewsScreen.dart';
 
 void main() {
   HttpOverrides.global = NoCheckCertificateHttpOverrides();
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/", page: () => HomeScreen()),
         GetPage(name: "/home", page: () => HomeScreen()),
         GetPage(name: "/analysis", page: () => AnalysisScreen()),
+        GetPage(name: "/news", page: () => NewsScreen()),
 
         // # API Test
         //GetPage(name: "/", page: () => HomeScreen()),
