@@ -36,7 +36,7 @@ class _AnalysisItemChartState extends State<AnalysisItemChart> {
     super.initState();
     setState(() {
       ticker = widget.ticker; // 상위 위젯으로부터 호출시 변수값 전달 받기 위함
-      print('chart: $ticker');
+      //print('chart: $ticker');
       isLoading = false;
     });
   }

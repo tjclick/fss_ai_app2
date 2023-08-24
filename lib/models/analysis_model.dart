@@ -65,7 +65,6 @@ class TickerPointListData{
 class TickerDailyAmountList{
   late String tda_datetime;
   late int tda_gov;
-  late int tda_company;
   late int tda_person;
   late int tda_foreign;
 
@@ -73,7 +72,6 @@ class TickerDailyAmountList{
   TickerDailyAmountList({
     required this.tda_datetime,
     required this.tda_gov,
-    required this.tda_company,
     required this.tda_person,
     required this.tda_foreign,
   });
@@ -81,7 +79,6 @@ class TickerDailyAmountList{
   TickerDailyAmountList.fromMap(Map<String, dynamic>? map) {
     tda_datetime = map?['datetime'] ?? 'yyyymmdd';
     tda_gov = map?['gov'] ?? 0;
-    tda_company = map?['company'] ?? 0;
     tda_person = map?['person'] ?? 0;
     tda_foreign = map?['foreign'] ?? 0;
   }

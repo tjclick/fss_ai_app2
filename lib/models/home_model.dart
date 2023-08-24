@@ -58,15 +58,15 @@ class TickerSubLabelData{
   });
 
   TickerSubLabelData.fromMap(Map<String, dynamic>? map) {
-    yest_high = map?['yest_high'] ?? '';
-    yest_low = map?['yest_low'] ?? '';
-    yest_close = map?['yest_close'] ?? '';
-    day1_high = map?['day1_high'] ?? '';
-    day1_low = map?['day1_low'] ?? '';
-    day1_buy_price = map?['day1_buy_price'] ?? '';
-    day2_high = map?['day2_high'] ?? '';
-    day2_low = map?['day2_low'] ?? '';
-    day2_sale_price = map?['day2_sale_price'] ?? '';
+    yest_high = map?['yest_high'] ?? 0;
+    yest_low = map?['yest_low'] ?? 0;
+    yest_close = map?['yest_close'] ?? 0;
+    day1_high = map?['day1_high'] ?? 0;
+    day1_low = map?['day1_low'] ?? 0;
+    day1_buy_price = map?['day1_buy_price'] ?? 0;
+    day2_high = map?['day2_high'] ?? 0;
+    day2_low = map?['day2_low'] ?? 0;
+    day2_sale_price = map?['day2_sale_price'] ?? 0;
     
   }
 }

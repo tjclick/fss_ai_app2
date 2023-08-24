@@ -149,6 +149,10 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                         fontSize: 16, color: Color(0xFF797979)),
                                   ),
                                 ),
+                                // 토글 버튼으로 Y, N 변경시 호출할 API POST처리
+                                // AdminConfirmFlagUpdate?flag=N&ticker={ticker}&p_date={e_date}"
+                                //
+
                               ],
                             ),
                           );
@@ -191,9 +195,9 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                         // SUB layer-02 (시세)
                         if (index == 2) {
                           return Container(
-                            padding: EdgeInsets.fromLTRB(20, 20, 0, 10),
+                            padding: EdgeInsets.fromLTRB(20, 20, 20, 10),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   '시세',
@@ -203,7 +207,16 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                     //fontWeight: FontWeight.bold,
                                   ),
                                 ),
+                                Text(
+                                  '주간 +12.5%',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Color.fromARGB(255, 245, 70, 70),
+                                    //fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ],
+                              
                             ),
                           );
                         }
@@ -245,15 +258,23 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                         // SUB layer-02 (등락률)
                         if (index == 4) {
                           return Container(
-                            padding: EdgeInsets.fromLTRB(20, 20, 0, 10),
+                            padding: EdgeInsets.fromLTRB(20, 20, 20, 10),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   '등락률',
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Color(0xFFEDEDED),
+                                    //fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  '주간 +12.5%',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Color.fromARGB(255, 245, 70, 70),
                                     //fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -297,15 +318,23 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                         // SUB layer-02 (거래량)
                         if (index == 6) {
                           return Container(
-                            padding: EdgeInsets.fromLTRB(20, 20, 0, 10),
+                            padding: EdgeInsets.fromLTRB(20, 20, 20, 10),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   '순매수',
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Color(0xFFEDEDED),
+                                    //fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  '주간 +12.5%',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Color.fromARGB(255, 245, 70, 70),
                                     //fontWeight: FontWeight.bold,
                                   ),
                                 ),

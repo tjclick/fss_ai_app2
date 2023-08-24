@@ -1,5 +1,6 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../models/analysis_model.dart';
 import '../../providers/analysis_provider.dart';
@@ -45,6 +46,10 @@ class _AnalysisAmountChartState extends State<AnalysisAmountChart> {
   Widget build(BuildContext context) {
     // final blue = charts.MaterialPalette.blue.shadeDefault;
     // final red = charts.MaterialPalette.red.shadeDefault;
+    // final customTickFormatter = new charts.BasicNumericTickFormatterSpec((value) => '$value'+'K');
+    final customTickFormatter = new charts.BasicNumericTickFormatterSpec.fromNumberFormat(
+          new NumberFormat.compact(locale: 'ko') // K, 만 단위 표시
+    );
 
     List<charts.Series<TickerDailyAmountList, String>> series(){
       return [
@@ -55,17 +60,7 @@ class _AnalysisAmountChartState extends State<AnalysisAmountChart> {
             domainFn: (TickerDailyAmountList series, _) => series.tda_datetime, // X축
             measureFn: (TickerDailyAmountList series, _) => series.tda_gov, // Y축
             strokeWidthPxFn: (_, __) => 1, // 라인 굵기 (PredictedTickerData series, _) => series.yprice
-            colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-            // colorFn: (TickerDailySiseData series, _) =>
-            //     series.tds_rate <= 0 ? blue : red,
-          )..setAttribute(charts.rendererIdKey, 'customLine'),
-          new charts.Series(
-            id: "회사",
-            data: _data,
-            domainFn: (TickerDailyAmountList series, _) => series.tda_datetime, // X축
-            measureFn: (TickerDailyAmountList series, _) => series.tda_company, // Y축
-            strokeWidthPxFn: (_, __) => 1, // 라인 굵기 (PredictedTickerData series, _) => series.yprice
-            colorFn: (_, __) => charts.MaterialPalette.yellow.shadeDefault,
+            colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
             // colorFn: (TickerDailySiseData series, _) =>
             //     series.tds_rate <= 0 ? blue : red,
           )..setAttribute(charts.rendererIdKey, 'customLine'),
@@ -85,7 +80,7 @@ class _AnalysisAmountChartState extends State<AnalysisAmountChart> {
             domainFn: (TickerDailyAmountList series, _) => series.tda_datetime, // X축
             measureFn: (TickerDailyAmountList series, _) => series.tda_foreign, // Y축
             strokeWidthPxFn: (_, __) => 1, // 라인 굵기 (PredictedTickerData series, _) => series.yprice
-            colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+            colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
             // colorFn: (TickerDailySiseData series, _) =>
             //     series.tds_rate <= 0 ? blue : red,
           )..setAttribute(charts.rendererIdKey, 'customLine'),
@@ -129,6 +124,7 @@ class _AnalysisAmountChartState extends State<AnalysisAmountChart> {
                           color: charts.MaterialPalette.gray.shade800,
                         ),
                       ),
+                      tickFormatterSpec: customTickFormatter,
                       // Y축 가이드 라인 수, 간격
                       tickProviderSpec: new charts.BasicNumericTickProviderSpec(
                           desiredTickCount: 5, zeroBound: false),
