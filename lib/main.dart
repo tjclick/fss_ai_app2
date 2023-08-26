@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'screens/AnalysisScreen.dart';
+import 'screens/HistoryScreen.dart';
 import 'screens/HomeScreen.dart';
 import 'screens/NewsScreen.dart';
+import 'modules/history/ticker_hist_detail.dart';
 
 void main() {
   HttpOverrides.global = NoCheckCertificateHttpOverrides();
@@ -44,12 +46,10 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/home", page: () => HomeScreen()),
         GetPage(name: "/analysis", page: () => AnalysisScreen()),
         GetPage(name: "/news", page: () => NewsScreen()),
+        GetPage(name: "/history", page: () => HistoryScreen()),
+        GetPage(name: "/historyDetail", page: () => HistoryDetailView()),
 
         // # API Test
-        //GetPage(name: "/", page: () => HomeScreen()),
-        //GetPage(name: "/drivers", page: () => ReturnPvc()),
-        // # GetX Test
-        //GetPage(name: "/map", page: () => PageMapApp()),
         //GetPage(name: "/para/:ID4", page: () => PageParaApp()),
       ],
       //home: HomeScreen(),

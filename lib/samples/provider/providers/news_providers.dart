@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import '../models/news.dart';
+import 'package:fss_ai_app2/samples/provider/models/news.dart';
 import 'package:http/http.dart' as http;
 
 class NewsProviders{

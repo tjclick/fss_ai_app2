@@ -1,9 +1,8 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
+import 'package:fss_ai_app2/models/analysis_model.dart';
+import 'package:fss_ai_app2/providers/analysis_provider.dart';
 import 'package:intl/intl.dart';
-
-import '../../models/analysis_model.dart';
-import '../../providers/analysis_provider.dart';
 
 class AnalysisAmountChart extends StatefulWidget {
   final String ticker; // 상위 위젯 호출시 변수값 전달 받기 위함

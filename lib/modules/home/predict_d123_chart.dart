@@ -1,8 +1,7 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
-
-import '../../models/home_model.dart';
-import '../../providers/home_provider.dart';
+import 'package:fss_ai_app2/models/home_model.dart';
+import 'package:fss_ai_app2/providers/home_provider.dart';
 
 class HomeItemChart extends StatefulWidget  {
   final String ticker;                    // 상위 위젯 호출시 변수값 전달 받기 위함
@@ -88,13 +87,15 @@ class _HomeItemChartState extends State<HomeItemChart> {
                 primaryMeasureAxis: new charts.NumericAxisSpec(
                   renderSpec: charts.GridlineRendererSpec(
                     lineStyle: charts.LineStyleSpec(
-                      //dashPattern: [3, 3],
-                      color: charts.MaterialPalette.gray.shadeDefault,
+                      dashPattern: [1, 1],
+                      color: charts.MaterialPalette.gray.shade500,
                     ),
                     //labelStyle: charts.TextStyleSpec(fontSize: 14, color: charts.MaterialPalette.white),
                   ),
                   tickProviderSpec:
-                      new charts.BasicNumericTickProviderSpec(zeroBound: false),
+                      new charts.BasicNumericTickProviderSpec(
+                      desiredTickCount: 5, zeroBound: false
+                      ),
                 ),
 
                 behaviors: [

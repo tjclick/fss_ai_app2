@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../../models/home_model.dart';
-import '../../providers/home_provider.dart';
+import 'package:fss_ai_app2/models/home_model.dart';
+import 'package:fss_ai_app2/providers/home_provider.dart';
+import 'package:intl/intl.dart';
 
 class HomeSubLabelData extends StatefulWidget {
   final String ticker; // 상위 위젯 호출시 변수값 전달 받기 위함
@@ -37,6 +37,7 @@ class _HomeSubLabelDataState extends State<HomeSubLabelData> {
 
   @override
   Widget build(BuildContext context) {
+    final compactFormat = NumberFormat.simpleCurrency(locale: 'ko_KR', name: '', decimalDigits: 0);
     // DB 결과 한개 1 row Json(pTSubLabelData)에 대하여 변수 값 처리
     var yest_high;
     var yest_low;
@@ -48,15 +49,15 @@ class _HomeSubLabelDataState extends State<HomeSubLabelData> {
     var day2_low;
     var day2_sale_price;
     for (var item in _data) {
-        yest_high = item.yest_high;
-        yest_low = item.yest_low;
-        yest_close = item.yest_close;
+        yest_high = compactFormat.format(item.yest_high);
+        yest_low = compactFormat.format(item.yest_low);
+        yest_close = compactFormat.format(item.yest_close);
         day1_high = item.day1_high;
         day1_low = item.day1_low;
-        day1_buy_price = item.day1_buy_price;
+        day1_buy_price = compactFormat.format(item.day1_buy_price);
         day2_high = item.day2_high;
         day2_low = item.day2_low;
-        day2_sale_price = item.day2_sale_price;
+        day2_sale_price = compactFormat.format(item.day2_sale_price);
     }
  
     return Column(
@@ -69,23 +70,23 @@ class _HomeSubLabelDataState extends State<HomeSubLabelData> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('H ' + yest_high.toString(),
+                        Text('H ' + yest_high,
                           style: TextStyle(
-                            fontSize: 13,
-                            color: Color.fromARGB(255, 240,60,60),
+                            fontSize: 16,
+                            color: Color(0xFFEE4444),
                           ),
                         ),
-                        Text('L ' + yest_low.toString(),
+                        Text('L ' + yest_low,
                         // Text(pTickerList[index].close.toString(),
                           style: TextStyle(
-                            fontSize: 13,
+                            fontSize: 16,
                             color: Color.fromARGB(255, 60,150,230),
                           ),
                         ),
-                        Text('C ' + yest_close.toString(),
+                        Text('C ' + yest_close,
                         // Text(pTickerList[index].close.toString(),
                           style: TextStyle(
-                            fontSize: 13,
+                            fontSize: 16,
                             color: Color(0xFFEDEDED),
                           ),
                         ),
@@ -99,27 +100,27 @@ class _HomeSubLabelDataState extends State<HomeSubLabelData> {
                       children: [
                         Text('H ' + day1_high.toString() + '%',
                           style: TextStyle(
-                            fontSize: 13,
-                            color: Color.fromARGB(255, 240,60,60),
+                            fontSize: 16,
+                            color: Color(0xFFEE4444),
                           ),
                         ),
                         Text('L ' + day1_low.toString() + '%',
                         // Text(pTickerList[index].close.toString(),
                           style: TextStyle(
-                            fontSize: 13,
-                            color: Color.fromARGB(255, 60,150,230),
+                            fontSize: 16,
+                            color: Color(0xFF4488EE),
                           ),
                         ),
                         Container(
                           padding: EdgeInsets.fromLTRB(3, 1, 3, 1),
                           decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 60,150,230),
+                            color: Color(0xFF4488EE),
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          child: Text('매수 ' + day1_buy_price.toString(),
+                          child: Text('구매 ' + day1_buy_price,
                           // Text(pTickerList[index].close.toString(),
                             style: TextStyle(
-                              fontSize: 13,
+                              fontSize: 16,
                               color: Color(0xFFEDEDED), 
                             )
                           ),
@@ -134,28 +135,28 @@ class _HomeSubLabelDataState extends State<HomeSubLabelData> {
                       children: [
                         Text('H ' + day2_high.toString() + '%',
                           style: TextStyle(
-                            fontSize: 13,
-                            color: Color.fromARGB(255, 240,60,60),
+                            fontSize: 16,
+                            color: Color(0xFFEE4444),
                           ),
                         ),
                         Text('L ' + day2_low.toString() + '%',
                         // Text(pTickerList[index].close.toString(),
                           style: TextStyle(
-                            fontSize: 13,
-                            color: Color.fromARGB(255, 60,150,230),
+                            fontSize: 16,
+                            color: Color(0xFF4488EE),
                           ),
                         ),
                         
                         Container(
                           padding: EdgeInsets.fromLTRB(3, 1, 3, 1),
                           decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 250, 60, 60),
+                            color: Color(0xFFEE4444),
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          child: Text('매도 ' + day2_sale_price.toString(),
+                          child: Text('판매 ' + day2_sale_price.toString(),
                           // Text(pTickerList[index].close.toString(),
                             style: TextStyle(
-                              fontSize: 13,
+                              fontSize: 16,
                               color: Color(0xFFEDEDED), 
                             )
                           ),

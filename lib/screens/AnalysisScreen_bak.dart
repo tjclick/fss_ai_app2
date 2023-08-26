@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fss_ai_app2/models/home_model.dart';
+import 'package:fss_ai_app2/modules/analysis/chart_daily_rating.dart';
+import 'package:fss_ai_app2/modules/analysis/point_uri_crawl_sise_.dart';
+// import 'package:fss_ai_app2/modules/analysis/news_crawl.dart';
+import 'package:fss_ai_app2/providers/home_provider.dart';
 import 'package:get/get.dart';
-
-import '../models/home_model.dart';
-import '../modules/analysis/chart_daily_rating.dart';
-import '../modules/analysis/point_uri_crawl_sise_.dart';
-// import '../modules/analysis/news_crawl.dart';
-import '../providers/home_provider.dart';
 
 class AnalysisScreen extends StatefulWidget {
   @override

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:fss_ai_app2/models/home_model.dart';
+import 'package:fss_ai_app2/modules/home/predict_d123_chart.dart';
+import 'package:fss_ai_app2/modules/home/recomm_sub_data.dart';
+import 'package:fss_ai_app2/providers/home_provider.dart';
 import 'package:get/get.dart';
-
-import '../models/home_model.dart';
-import '../modules/home/predict_d123_chart.dart';
-import '../modules/home/recomm_sub_data.dart';
-import '../providers/home_provider.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -23,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _onItemTapped(int index) {
     if (index == 0) Get.toNamed("/home");
     if (index == 1) Get.toNamed("/analysis");
-    if (index == 2) Get.toNamed("/perform");
+    if (index == 2) Get.toNamed("/history");
     if (index == 3) Get.toNamed("/users");
   }
 
@@ -47,22 +46,25 @@ class _HomeScreenState extends State<HomeScreen> {
       Fluttertoast.showToast(
             msg: "AI는 투자경고 종목은 추천하지 않습니다",
             toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.TOP,
+            gravity: ToastGravity.BOTTOM,
             backgroundColor: Color.fromARGB(255, 250, 78, 78), // Customize the background color
             fontSize: 17.0, // Customize the font size
       );
-      if (pTickerList.isEmpty) {
-        Future.delayed(Duration.zero, () {
-          Fluttertoast.showToast(
-            msg: "경기 불안으로 추천종목이 없습니다",
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.CENTER,
-            backgroundColor: Color.fromARGB(255, 250, 78, 78), // Customize the background color
-            fontSize: 17.0, // Customize the font size
-          );
+      
+      Future.delayed(Duration(seconds: 2), () {
+          if (pTickerList.isEmpty) {
+            Fluttertoast.showToast(
+              msg: "시황 불안정으로 추천 종목이 없습니다",
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.CENTER,
+              backgroundColor: Color.fromARGB(255, 250, 78, 78), // Customize the background color
+              fontSize: 17.0, // Customize the font size
+            );
           
-        });
-      }
+          }
+        }
+      );
+      
     }
 
   }
@@ -131,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           Container(
                             padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                            height: 260,
+                            height: 270,
                             width: MediaQuery.of(context).size.width * 0.92,
                             decoration: BoxDecoration(
                               color: Color.fromARGB(255, 0, 0, 0),
@@ -152,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 // 3*3 grid안에  각각의 grid에 text를 넣기 위해 column 사용하고 radius 10을 주고 색상을 넣어줌 
                                 Container(
                                   padding: EdgeInsets.fromLTRB(25, 0, 0, 0),
-                                  height: 70,
+                                  height: 80,
                                   width: MediaQuery.of(context).size.width * 0.99,
                                   decoration: BoxDecoration(
                                     color: Color.fromARGB(255, 0, 0, 0),

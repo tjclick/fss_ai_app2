@@ -1,44 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:fss_ai_app2/models/home_model.dart';
+import 'package:get/get.dart';
+
 import 'package:fss_ai_app2/modules/analysis/chart_daily_amount.dart';
 import 'package:fss_ai_app2/modules/analysis/chart_daily_ohlc.dart';
 import 'package:fss_ai_app2/modules/analysis/chart_daily_rating.dart';
-//import 'package:fss_ai_app2/modules/analysis/analysis_crawl.dart';
 import 'package:fss_ai_app2/modules/analysis/point_list.dart';
-import 'package:fss_ai_app2/providers/home_provider.dart';
-import 'package:get/get.dart';
 
-class AnalysisScreen extends StatefulWidget {
+class HistoryDetailView extends StatefulWidget {
+  const HistoryDetailView({super.key});
+
   @override
-  _AnalysisScreenState createState() => _AnalysisScreenState();
+  _HistoryDetailViewState createState() => _HistoryDetailViewState();
 }
 
-class _AnalysisScreenState extends State<AnalysisScreen> {
-  int _selectedIndex = 1;
-  bool isLoading = true;
-  String selectedMenu = ''; // 선택된 ticker
-  String selectedName = ''; // 선택된 ticker의 name
-  List<PredictedTickerList> pTickerList = [];
-  HomeProviders homeProvider = HomeProviders();
-
-  void _onItemTapped(int index) {
-    if (index == 0) Get.toNamed("/home");
-    if (index == 1) Get.toNamed("/analysis");
-    if (index == 2) Get.toNamed("/history");
-    if (index == 3) Get.toNamed("/users");
-  }
+class _HistoryDetailViewState extends State<HistoryDetailView> {
+  late String ticker; // 상위 위젯으로부터 호출시 변수값 전달 받기 위함
+  late String t_name;
 
   Future initPredictedTickerList() async {
-    pTickerList = await homeProvider.getPredictedTickerList();
+    setState(() {
+      ticker = Get.arguments["ticker"];
+      t_name = Get.arguments["t_name"];
+      //_fetchData();
+    });
   }
 
   @override
   void initState() {
     super.initState();
-    initPredictedTickerList().then((_) {
-      setState(() {
-        isLoading = false;
-      });
+    setState(() {
+      ticker = Get.arguments["ticker"];
+      t_name = Get.arguments["t_name"];
     });
   }
 
@@ -47,7 +39,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Analysis of Today',
+          t_name + ' ' + ticker,
           style: TextStyle(
             color: Color(0xFFEDEDED),
             fontWeight: FontWeight.bold,
@@ -55,10 +47,10 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.search),
+            icon: Icon(Icons.close),
             color: Color(0xFFEDEDED),
             onPressed: () {
-              // Handle search action
+              Navigator.pop(context);
             },
           ),
         ],
@@ -68,47 +60,11 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
         children: [
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Row(
-              //mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: pTickerList.map((pTickerList) {
-                return Padding(
-                  padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                      backgroundColor: selectedMenu == pTickerList.ticker
-                          ? Color.fromARGB(255, 87, 87, 87) // 선택된 메뉴는 파란색으로 표시
-                          : Color.fromARGB(255, 46, 46, 46),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        selectedMenu = pTickerList.ticker; // ticker 코드값
-                        selectedName = pTickerList.name; // ticker 코드값
-                        //print(selectedMenu);
-                      });
-                    },
-                    child: Text(
-                      pTickerList.name,
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: selectedMenu == pTickerList.ticker
-                            ? Color.fromARGB(
-                                255, 230, 230, 230) // 선택된 메뉴는 파란색으로 표시
-                            : Color.fromARGB(255, 80, 80, 80),
-                      ),
-                    ),
-                  ),
-                );
-              }).toList(),
-            ),
           ),
           Expanded(
             child: CustomScrollView(
               slivers: [
-                if (selectedMenu.isNotEmpty)
-                  SliverList(
+                SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
                         // SUB layer-01 (title : AI indexing, company name)
@@ -140,7 +96,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                 TextButton(
                                   onPressed: () {
                                       Get.toNamed("/news",
-                                      arguments: {"ticker": selectedMenu, "t_name": selectedName, });
+                                      arguments: {"ticker": ticker, "t_name": t_name, });
                                   },
                                   child: Text(
                                     'News',
@@ -182,7 +138,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                       //chart(home_chart) widget 호출 ticker변수 전달
                                       //child: AnalysisCrawlJson(ticker: selectedMenu),
                                       child: AnalysisPointList(
-                                          ticker: selectedMenu),
+                                          ticker: ticker),
                                     ),
                                   ],
                                 ),
@@ -245,7 +201,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                           0.99,
                                       //chart(home_chart) widget 호출 ticker변수 전달
                                       child: AnalysisOhlcChart(
-                                          ticker: selectedMenu),
+                                          ticker: ticker),
                                     ),
                                   ],
                                 ),
@@ -305,7 +261,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                       height: 200,
                                       width: MediaQuery.of(context).size.width * 0.99,
                                       //chart(home_chart) widget 호출 ticker변수 전달
-                                      child: AnalysisItemChart(ticker: selectedMenu),
+                                      child: AnalysisItemChart(ticker: ticker),
                                     ),
                                   ],
                                 ),
@@ -366,7 +322,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                           0.99,
                                       //chart(home_chart) widget 호출 ticker변수 전달
                                       child: AnalysisAmountChart(
-                                          ticker: selectedMenu),
+                                          ticker: ticker),
                                     ),
                                   ],
                                 ),
@@ -384,34 +340,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '홈',
-            backgroundColor: Color(0xFF292929),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.analytics),
-            label: '분석',
-            backgroundColor: Color(0xFF292929),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.grid_view),
-            label: '실적',
-            backgroundColor: Color(0xFF292929),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: '회원',
-            backgroundColor: Color(0xFF292929),
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Color(0xFFededed),
-        unselectedItemColor: Color.fromARGB(255, 94, 94, 94),
-        onTap: _onItemTapped,
-      ),
+      
     );
   }
 }
