@@ -4,6 +4,7 @@ import 'package:fss_ai_app2/models/home_model.dart';
 import 'package:fss_ai_app2/modules/home/predict_d123_chart.dart';
 import 'package:fss_ai_app2/modules/home/recomm_sub_data.dart';
 import 'package:fss_ai_app2/providers/home_provider.dart';
+import 'package:fss_ai_app2/screens/BottomNavigationBar.dart';
 import 'package:get/get.dart';
 
 
@@ -13,14 +14,17 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 0;
   List<PredictedTickerList> pTickerList = [];
   bool isLoading = true;
   HomeProviders homeProvider = HomeProviders();
   bool isToastDisplayed = false;
 
-  void _onItemTapped(int index) {
-    if (index == 0) Get.toNamed("/home");
+  int _currentIndex = 0;
+  void _onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+    //if (index == 0) Get.toNamed("/home");
     if (index == 1) Get.toNamed("/analysis");
     if (index == 2) Get.toNamed("/history");
     if (index == 3) Get.toNamed("/users");
@@ -29,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future initPredictedTickerList() async {
     pTickerList = await homeProvider.getPredictedTickerList();
+    await Future.delayed(Duration(seconds: 1));
   }
 
   @override
@@ -48,17 +53,17 @@ class _HomeScreenState extends State<HomeScreen> {
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
             backgroundColor: Color.fromARGB(255, 250, 78, 78), // Customize the background color
-            fontSize: 17.0, // Customize the font size
+            fontSize: 16.0, // Customize the font size
       );
       
       Future.delayed(Duration(seconds: 2), () {
           if (pTickerList.isEmpty) {
             Fluttertoast.showToast(
-              msg: "시황 불안정으로 추천 종목이 없습니다",
+              msg: "시황 불안정으로 종목을 추천하지 않습니다",
               toastLength: Toast.LENGTH_LONG,
               gravity: ToastGravity.CENTER,
               backgroundColor: Color.fromARGB(255, 250, 78, 78), // Customize the background color
-              fontSize: 17.0, // Customize the font size
+              fontSize: 16.0, // Customize the font size
             );
           
           }
@@ -179,35 +184,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       
-      
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '홈',
-            backgroundColor: Color(0xFF292929),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.analytics),
-            label: '분석',
-            backgroundColor: Color(0xFF292929),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.grid_view),
-            label: '실적',
-            backgroundColor: Color(0xFF292929),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: '회원',
-            backgroundColor: Color(0xFF292929),
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Color(0xFFededed),
-        unselectedItemColor: Color.fromARGB(255, 94, 94, 94),
-        onTap: _onItemTapped,
+      bottomNavigationBar: CustomBottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: _onTabTapped,
       ),
+      
     );
   }
 }

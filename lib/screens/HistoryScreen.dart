@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fss_ai_app2/models/history_model.dart';
 import 'package:fss_ai_app2/providers/history_provider.dart';
+import 'package:fss_ai_app2/screens/BottomNavigationBar.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -10,23 +11,28 @@ class HistoryScreen extends StatefulWidget {
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
-  int _selectedIndex = 0;
   String listTitleDate = '';
   List<HistoryDailyRateList> pTDHistoryList = [];
   List<HistoryDailyRateList> jsonData = [];
   bool isLoading = true;
   HistoryProviders historyProvider = HistoryProviders();
 
-  void _onItemTapped(int index) {
+  int _currentIndex = 2;
+  void _onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
     if (index == 0) Get.toNamed("/home");
     if (index == 1) Get.toNamed("/analysis");
-    if (index == 2) Get.toNamed("/history");
+    //if (index == 2) Get.toNamed("/history");
     if (index == 3) Get.toNamed("/users");
   }
 
   Future initHistoryDailyRateList() async {
     pTDHistoryList = await historyProvider.getHistoryDailyRateList();
     jsonData = pTDHistoryList;
+
+    await Future.delayed(Duration(seconds: 1));
   }
 
   @override
@@ -78,7 +84,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             pTDHistoryList[index].play_date.substring(4, 6) + '/' + pTDHistoryList[index].play_date.substring(6, 8),
                             style: TextStyle(
                               fontSize: 14,
-                              color: Color(0xFF797979),
+                              color: Color(0xFFEDEDED),
                               //fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -115,7 +121,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             child: Container(
                               alignment: Alignment.centerRight,
                               child: IconButton(
-                                  icon: Icon(Icons.arrow_forward_ios, size: 15),
+                                  icon: Icon(Icons.arrow_forward_ios, size: 17),
                                   color: Color(0xFFEDEDED),
                                   onPressed: () {
                                       Get.toNamed("/historyDetail",
@@ -164,33 +170,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '홈',
-            backgroundColor: Color(0xFF292929),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.analytics),
-            label: '분석',
-            backgroundColor: Color(0xFF292929),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.grid_view),
-            label: '실적',
-            backgroundColor: Color(0xFF292929),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: '회원',
-            backgroundColor: Color(0xFF292929),
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Color(0xFFededed),
-        unselectedItemColor: Color.fromARGB(255, 94, 94, 94),
-        onTap: _onItemTapped,
+      
+      bottomNavigationBar: CustomBottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: _onTabTapped,
       ),
     );
   }

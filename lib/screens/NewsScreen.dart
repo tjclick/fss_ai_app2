@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fss_ai_app2/config/set_const.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,9 +20,16 @@ class _NewsScreenState extends State<NewsScreen> {
   late String ticker; // 상위 위젯으로부터 호출시 변수값 전달 받기 위함
   late String t_name;
   List<dynamic> items = [];
+  static const baseUrl = SetConfigInfo.apiNaverUrl;
 
-  static const baseUrl =
-      'https://openapi.naver.com/v1/search/news.json?display=15&start=1&sort=date';
+  // _launchURL(linkUrl) async {
+  //   //const url = linkUrl; // 열고자 하는 URL 주소
+  //   if (await canLaunch(linkUrl)) {
+  //     await launch(linkUrl);
+  //   } else {
+  //     throw 'Could not launch $linkUrl';
+  //   }
+  // }
 
   // 오늘 날짜와 2주 전 날짜를 구하기 위한 변수
   // DateTime now = DateTime.now();
@@ -65,7 +73,7 @@ class _NewsScreenState extends State<NewsScreen> {
     
     // FutureBuilder와 delayed 데이터 가져오는 시간과 페이지 로딩 시간을 맞추기 위함
     // 사용하지 않으면 페이지 먼저 로딩되어 데이터 보이지 않음
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 1));
     return items;
   }
 
@@ -148,6 +156,7 @@ class _NewsScreenState extends State<NewsScreen> {
                             onTap: () {
                               // 아이템을 탭할 때의 동작을 추가할 수 있습니다.
                               print('Linked : ${items[index]['link']}');
+                              //_launchURL(items[index]['link']);
                             },
                           ),
                           Divider(

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
 import 'package:fss_ai_app2/modules/analysis/chart_daily_amount.dart';
 import 'package:fss_ai_app2/modules/analysis/chart_daily_ohlc.dart';
 import 'package:fss_ai_app2/modules/analysis/chart_daily_rating.dart';
 import 'package:fss_ai_app2/modules/analysis/point_list.dart';
+import 'package:get/get.dart';
 
 class HistoryDetailView extends StatefulWidget {
   const HistoryDetailView({super.key});
@@ -163,7 +162,7 @@ class _HistoryDetailViewState extends State<HistoryDetailView> {
                                   ),
                                 ),
                                 Text(
-                                  '주간 +12.5%',
+                                  '데이터 >',
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Color.fromARGB(255, 245, 70, 70),
@@ -286,7 +285,7 @@ class _HistoryDetailViewState extends State<HistoryDetailView> {
                                   ),
                                 ),
                                 Text(
-                                  '주간 +12.5%',
+                                  '매수/매도 >',
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Color.fromARGB(255, 245, 70, 70),

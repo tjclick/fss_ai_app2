@@ -6,6 +6,7 @@ import 'package:fss_ai_app2/modules/analysis/chart_daily_rating.dart';
 //import 'package:fss_ai_app2/modules/analysis/analysis_crawl.dart';
 import 'package:fss_ai_app2/modules/analysis/point_list.dart';
 import 'package:fss_ai_app2/providers/home_provider.dart';
+import 'package:fss_ai_app2/screens/BottomNavigationBar.dart';
 import 'package:get/get.dart';
 
 class AnalysisScreen extends StatefulWidget {
@@ -14,22 +15,26 @@ class AnalysisScreen extends StatefulWidget {
 }
 
 class _AnalysisScreenState extends State<AnalysisScreen> {
-  int _selectedIndex = 1;
   bool isLoading = true;
   String selectedMenu = ''; // 선택된 ticker
   String selectedName = ''; // 선택된 ticker의 name
   List<PredictedTickerList> pTickerList = [];
   HomeProviders homeProvider = HomeProviders();
 
-  void _onItemTapped(int index) {
+  int _currentIndex = 1;
+  void _onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
     if (index == 0) Get.toNamed("/home");
-    if (index == 1) Get.toNamed("/analysis");
+    //if (index == 1) Get.toNamed("/analysis");
     if (index == 2) Get.toNamed("/history");
     if (index == 3) Get.toNamed("/users");
   }
 
   Future initPredictedTickerList() async {
     pTickerList = await homeProvider.getPredictedTickerList();
+    await Future.delayed(Duration(seconds: 1));
   }
 
   @override
@@ -207,7 +212,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                   ),
                                 ),
                                 Text(
-                                  '주간 +12.5%',
+                                  '데이터 >',
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Color.fromARGB(255, 245, 70, 70),
@@ -330,7 +335,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                   ),
                                 ),
                                 Text(
-                                  '주간 +12.5%',
+                                  '매수/매도 >',
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Color.fromARGB(255, 245, 70, 70),
@@ -384,34 +389,13 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '홈',
-            backgroundColor: Color(0xFF292929),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.analytics),
-            label: '분석',
-            backgroundColor: Color(0xFF292929),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.grid_view),
-            label: '실적',
-            backgroundColor: Color(0xFF292929),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: '회원',
-            backgroundColor: Color(0xFF292929),
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Color(0xFFededed),
-        unselectedItemColor: Color.fromARGB(255, 94, 94, 94),
-        onTap: _onItemTapped,
+
+      bottomNavigationBar: CustomBottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: _onTabTapped,
       ),
+
+
     );
   }
 }
