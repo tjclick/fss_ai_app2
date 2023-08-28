@@ -70,20 +70,20 @@ class _HomeSubLabelDataState extends State<HomeSubLabelData> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('H ' + yest_high,
+                        Text('H ' + yest_high.toString(),
                           style: TextStyle(
                             fontSize: 16,
                             color: Color(0xFFEE4444),
                           ),
                         ),
-                        Text('L ' + yest_low,
+                        Text('L ' + yest_low.toString(),
                         // Text(pTickerList[index].close.toString(),
                           style: TextStyle(
                             fontSize: 16,
                             color: Color.fromARGB(255, 60,150,230),
                           ),
                         ),
-                        Text('C ' + yest_close,
+                        Text('C ' + yest_close.toString(),
                         // Text(pTickerList[index].close.toString(),
                           style: TextStyle(
                             fontSize: 16,
@@ -117,7 +117,7 @@ class _HomeSubLabelDataState extends State<HomeSubLabelData> {
                             color: Color(0xFF4488EE),
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          child: Text('구매 ' + day1_buy_price,
+                          child: Text('구매 ' + day1_buy_price.toString(),
                           // Text(pTickerList[index].close.toString(),
                             style: TextStyle(
                               fontSize: 16,
